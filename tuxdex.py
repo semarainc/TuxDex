@@ -48,7 +48,7 @@ def choosen():
             sys.exit(0)
         elif chooser == "2":
             subprocess.Popen("pkill scrcpy & pkill ffplay", shell=True)
-            ipport = input("Masukkan IP:PORT => ")
+            ipport = input("Insert IP:PORT From Wireless Debugging (e.g. 127.0.0.1:9999) => ")
             print("Please Insert Password To Launch Miraclecast as Superuser")
             print("==> Waiting User To Connect Dex From Phone!")
             subprocess.run('notify-send "Open And Connect Dex From Your Phone!"', shell=True)
