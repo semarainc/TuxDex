@@ -16,10 +16,12 @@ Note: The Current Script is messy but it works :)
 ## Installation
 ```bash
   $ git clone https://github.com/semarainc/TuxDex
+  $ cd TuxDex
   $ chmod +x tuxdex-restore.sh
 ```
 ## How To Use
 ```bash
+  $ cd TuxDex
   $ python3 tuxdex.py
 ```
 
