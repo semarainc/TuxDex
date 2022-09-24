@@ -6,13 +6,21 @@ Note: The Current Script is messy but it works :)
   The Current script is not really stable, but overall it works well on my machine, currently miraclecast requires to turnoff NetworkManager and WPA_Supplicant when activating it as as sink thats why before connecting to SamsungDex it needs to disable your wifi temporarily
 
 ## Requirements
+- Systemd
 - Python >=3.6
 - notify-send
 - [miraclecast](https://github.com/albfan/miraclecast)
 - [scrcpy](https://github.com/Genymobile/scrcpy)
+- pexpect
+- netinterfaces
 - Enable Developer Tools On Samsung S-Series Phone
 - Enable Wireless Debugging
 
+## Installing pexpect and netinterfaces
+Note: Requires Root because miracles.py need to run as superuser (Thanks To: Variatio_Delectat)
+'''bash
+  $ sudo pip3 install pexpect netinterfaces
+'''
 ## Installation
 ```bash
   $ git clone https://github.com/semarainc/TuxDex
