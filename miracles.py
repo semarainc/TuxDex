@@ -17,7 +17,7 @@ if __name__ == "__main__":  # a guard from unintended usage
     time.sleep(5)
     print("Starting Miraclecast")
 #    q = pexpect.spawn('miracle-wifid --lazy-managed', encoding='utf-8')
-    q = pexpect.spawn('miracle-wifid --interface wlp1s0', encoding='utf-8')
+    q = pexpect.spawn(f'miracle-wifid --interface {sys.argv[1]}', encoding='utf-8')
     q.setecho(False)
     time.sleep(2)
     p = pexpect.spawn("miracle-sinkctl --external-player true --port 1991 --audio 1", encoding='utf-8')

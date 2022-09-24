@@ -6,9 +6,9 @@ import json
 import subprocess
 import time
 import signal
+import capabilitiesCheck as CapCheck
 
-def pilihan2(data):
-    pass
+MiraRun = 0
 
 def app_path(filename):
     if getattr(sys, 'frozen', False):
@@ -20,7 +20,8 @@ def app_path(filename):
         datadir = os.path.dirname(__file__)
     return os.path.join(datadir, filename)
 
-def choosen():
+def choosen(wifi):
+    global MiraRun
     while 1:
         os.system("clear")
         print("******TuxDex Main Control*******")
@@ -31,14 +32,17 @@ def choosen():
         chooser = input("Pilihan: ")
 
         if chooser == "1":
-            print("Please Insert Password To Launch Miraclecast as Superuser")
-            print("==> Waiting User To Connect Dex From Phone!")
 
-            mir = subprocess.Popen(f"pkexec python3 {app_path('miracles.py')} >> /dev/null", shell=True)
-            time.sleep(4)
+            if MiraRun == 0:
+                print("Please Insert Password To Launch Miraclecast as Superuser")
+                print("==> Waiting User To Connect Dex From Phone!")
+                mir = subprocess.Popen(f"pkexec python3 {app_path('miracles.py')} {wifi} >> /dev/null", shell=True)
+                time.sleep(4)
 
-            while not os.path.exists("/var/koneksimiracle"):
-                pass
+                while not os.path.exists("/var/koneksimiracle"):
+                    pass
+            else:
+                print("Reuse Connection...")
             subprocess.run('notify-send "Connecting to Samsung Dex..."', shell=True)
             subprocess.Popen("pkill scrcpy & pkill ffplay", shell=True)
 #            time.sleep(10)
@@ -48,25 +52,30 @@ def choosen():
             sys.exit(0)
         elif chooser == "2":
             subprocess.Popen("pkill scrcpy & pkill ffplay", shell=True)
-            ipport = input("Insert IP:PORT From Wireless Debugging (e.g. 127.0.0.1:9999) => ")
-            print("Please Insert Password To Launch Miraclecast as Superuser")
-            print("==> Waiting User To Connect Dex From Phone!")
-            subprocess.run('notify-send "Open And Connect Dex From Your Phone!"', shell=True)
-            mir = subprocess.Popen(f"pkexec python3 {app_path('miracles.py')} >/dev/null", shell=True)
-            time.sleep(4)
-            while not os.path.exists("/var/koneksimiracle"):
-                pass
+            ipport = input("Insert IP:PORT => ")
+
+            if MiraRun == 0:
+                print("Please Insert Password To Launch Miraclecast as Superuser")
+                print("==> Waiting User To Connect Dex From Phone!")
+                subprocess.run('notify-send "Open And Connect Dex From Your Phone!"', shell=True)
+                mir = subprocess.Popen(f"pkexec python3 {app_path('miracles.py')} {wifi} >/dev/null", shell=True)
+                time.sleep(4)
+                while not os.path.exists("/var/koneksimiracle"):
+                    pass
+            else:
+                print("Reuse Connection...")
             subprocess.run('notify-send "Connecting to SamsungDex..."', shell=True)
 #            time.sleep(10)
             WaitToConnect(str(ipport))
             print("Restoring NetworkManager and Connecting To Device (Ensure Wifi Is Stable)...")
             time.sleep(3)
             input("Press Enter If Your Wifi is Ready, To Connect To SamsungDex...")
+            MiraRun = 1
             subprocess.Popen(f'''scrcpy --tcpip={str(ipport)} --display 2  -b 2M --window-title "TuxDex - Alpha" --fullscreen --forward-all-clicks >/dev/null && pkill ffplay''', shell=True)
             zelda = subprocess.run('''ffplay -ar 48000 -ac 2 -b:v 0 -b:a 2k -max_delay 0 -buffer_size 10k -framedrop  -vf "setpts=(PTS*1)" -vn -sn -nodisp rtp://127.0.0.1:1991 -loglevel quiet''', shell=True)
-            #subprocess.check_output("sudo kill {}".format(mir.pid), shell=True)
+            os.system("pkill scrcpy && pkill ffplay")
             #zelda.kill()
-            choosen()
+            choosen(wifi)
         elif chooser == '3':
             print("Insert Password Before Exit to Restore NetworkManager")
             subprocess.run(f"pkexec {app_path('tuxdex-restore.sh')}", shell=True)
@@ -81,6 +90,7 @@ def WaitToConnect(ip):
         time.sleep(3)
 
 def main():
+    wifi_ = CapCheck.CapabilityChecking()
     try:
         print("Welcome to TuxDex")
         print("Preparing Data...")
@@ -92,7 +102,7 @@ def main():
 
 #    time.sleep(20)
 
-        choosen()
+        choosen(wifi_)
 
     except KeyboardInterrupt:
         os.system("clear")
