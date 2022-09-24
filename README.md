@@ -3,7 +3,7 @@ Script to Help Run Your Samsung Dex From Linux Machine
 Note: The Current Script is messy but it works :)
 
 ## Limitation
-  The Current script is not really stable, but overall it works well on my machine, currently miraclecast requires to turnoff NetworkManager and WPA_Supplicant when activating it as as sink thats why before connecting to SamsungDex it needs to disable your wifi temporarily
+  The Current script is not really stable, but overall it works well on my machine, currently miraclecast requires to turnoff NetworkManager and WPA_Supplicant when activating it as sink, thats why before connecting to SamsungDex it needs to disable your wifi temporarily
 
 ## Requirements
 - Systemd
