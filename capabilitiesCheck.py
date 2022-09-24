@@ -2,6 +2,16 @@ import os
 import sys
 import subprocess
 
+def app_path(filename):
+    if getattr(sys, 'frozen', False):
+        # The application is frozen
+        datadir = os.path.dirname(sys.executable)
+    else:
+        # The application is not frozen
+        # Change this bit to match where you store your data files:
+        datadir = os.path.dirname(__file__)
+    return os.path.join(datadir, filename)
+
 def ProcessMe(cmd, shell=True):
     proc = subprocess.Popen(cmd, shell=shell, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     retproc = proc.communicate()
@@ -14,7 +24,7 @@ def InstallPips():
     print("Installing Library Needed For Miracles.py...")
     ProcessMe("pkexec pip3 install netifaces pexpect")
     print("Library Installed...")
-    with open(".installed", 'w') as f:
+    with open(app_path(".installed"), 'w') as f:
         f.write("")
 
 def NotifySendCheck():
