@@ -18,9 +18,9 @@ Note: The Current Script is messy but it works :)
 
 ## Installing pexpect and netinterfaces
 Note: Requires Root because miracles.py need to run as superuser (Thanks To: Variatio_Delectat)
-'''bash
+```bash
   $ sudo pip3 install pexpect netinterfaces
-'''
+```
 ## Installation
 ```bash
   $ git clone https://github.com/semarainc/TuxDex
