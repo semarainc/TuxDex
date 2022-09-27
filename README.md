@@ -12,7 +12,7 @@ Note: The Current Script is messy but it works :)
 - [miraclecast](https://github.com/albfan/miraclecast)
 - [scrcpy](https://github.com/Genymobile/scrcpy)
 - pexpect
-- netinterfaces
+- netifaces
 - Enable Developer Tools On Samsung S-Series Phone
 - Enable Wireless Debugging
 
